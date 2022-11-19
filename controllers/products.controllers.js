@@ -16,9 +16,14 @@ const productPost = async (req,res) =>
     res.json({'msg' : 'post'})
 }
 
-const productGetById = (req, res) =>
+const productGetById = async(req, res) =>
 {
-    
+    const { id } = req.params
+
+    const product = await Product.findById(id).populate('category','name');
+    console.log(product)
+
+    res.json(product)
 }
 
 

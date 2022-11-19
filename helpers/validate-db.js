@@ -1,5 +1,5 @@
-const {Categorie} = require('../models/category')
-const {Product} = require('../models/product')
+const Categorie = require('../models/category')
+const Product = require('../models/product')
 
 const categoryExist = async(id) =>
 {
@@ -12,9 +12,9 @@ const categoryExist = async(id) =>
 }
 const productExist = async(id) =>
 {
-    const producExist = await Product.findById(id)
-
-    if(!producExist)
+    const productExist = await Product.findById(id)
+    console.log(productExist)
+    if(!productExist)
     {
         throw new Error(`Id does not exist`)
     }

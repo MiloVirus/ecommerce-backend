@@ -9,11 +9,13 @@ const {validateFields} = require ('../middlewares/validate-fields')
 const {productExist} = require('../helpers/validate-db')
 
 router.get('/', productGet)
-router.get('/:id',[
-    check('id','No Mongo id').isMongoId(),
+
+router.get('/:id', [    
+    check('id','No Mongo id').isMongoId(), 
     check('id').custom(productExist),
-    validateFields], 
-    productGetById)
+    validateFields
+], productGetById );
+
 router.post('/',[jsonParser,
                 body('name', 'name is required').not().isEmpty(),
                 body('description', 'description is required').not().isEmpty(),
@@ -21,7 +23,9 @@ router.post('/',[jsonParser,
                 body('stock', 'stock is required').not().isEmpty(),
                 body('category', 'category is required').not().isEmpty(),
                  validateFields], productPost)
+
 router.put('/:id', jsonParser, productPut)
+
 router.delete('/:id', productDelete)
 
 
