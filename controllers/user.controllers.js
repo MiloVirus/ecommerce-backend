@@ -1,28 +1,34 @@
-const User = require('../models/user')
-const {validationResult} = require('express-validator')
+const {User} = require('../models/user')
 const bcryptjs = require('bcryptjs')
 const { generateJWT } = require('../helpers/generate-jwt')
 
-const verifyUser = async (req, res) =>{
 
-    // const users = await User.find() --- FIND ALL USERS 
-    const {user} = req
+const usersGetById = async(req, res) =>{
+    const { id } = req.params;
+    const user = await User.findById(id);
 
-    const token = await generateJWT(user.uid)
+    res.json(user);
+}
 
-    const userFound =
-    {
+
+const verifyUser = async (req, res) => {
+
+    const { user }  = req;
+
+   const token = await generateJWT(user.uid)
+
+    const userFound = {
         uid: user.id,
         name: user.name,
         lastName: user.lastName,
-        email: user.email,
-        address: user.address,
-        city: user.city,
-        country: user.country,
-        state: user.state
-    }
+        address:user.address,
+        city:user.city,
+        state:user.state,
+        country:user.country,
+        email:user.email
+      };
 
-    res.json({ user: userFound, token })
+    res.json({ user:userFound, token })
 }
 
 const userPost =  async (req, res) =>{
@@ -78,4 +84,4 @@ const userDelete = async(req, res) =>{
     res.json({'msg' : 'delete', user})
 }
 
-module.exports = {verifyUser, userPost, userPut, userDelete}
+module.exports = {verifyUser, userPost, userPut, userDelete, usersGetById}
