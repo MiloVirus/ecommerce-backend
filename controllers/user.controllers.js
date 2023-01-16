@@ -28,7 +28,7 @@ const verifyUser = async (req, res) => {
         email:user.email
       };
 
-    res.json({ user:userFound, token })
+    res.json({ user: userFound, token })
 }
 
 const userPost =  async (req, res) =>{
