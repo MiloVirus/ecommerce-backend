@@ -9,7 +9,7 @@ const validateJWT = async(req, res, next) => {
     }
 
     try {
-        const { uid } = jwt.verify(token, "s3cr3tk3y@4pplo4d3r");
+        const { uid } = jwt.verify(token, process.env.SECRET_JWT);
 
         const user = await User.findById(uid);
 
