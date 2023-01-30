@@ -1,12 +1,15 @@
 const {Router} = require('express')
+const { body, check} = require('express-validator')
 const bodyParser = require('body-parser')
-const router = Router()
+
+
 const jsonParser = bodyParser.json()
 const {verifyUser, userPost, userPut, userDelete, usersGetById} = require('../controllers/user.controllers')
-const { body, check} = require('express-validator')
-const { validateFields } = require('../middlewares/validate-fields')
-const { validateJWT } = require('../middlewares/validate-jwt')
-const cors = require('cors')
+
+const { validateFields, validateJWT } = require('../middlewares');
+
+const router = Router()
+
 
 router.get('/', validateJWT, verifyUser)
 router.get('/:id', [   
@@ -15,7 +18,7 @@ router.get('/:id', [
     validateFields
 ], usersGetById );
 router.post('/', [
-                cors(),jsonParser, 
+                jsonParser, 
                 body('name', 'name is required').not().isEmpty(),
                 body('lastName', 'Last name is required').not().isEmpty(),
                 body('email','Email invalid').isEmail(),

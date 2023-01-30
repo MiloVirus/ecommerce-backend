@@ -4,6 +4,7 @@ const { generateJWT } = require('../helpers/generate-jwt')
 
 
 const usersGetById = async(req, res) =>{
+    
     const { id } = req.params;
     const user = await User.findById(id);
 
